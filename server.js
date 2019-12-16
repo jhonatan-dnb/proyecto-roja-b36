@@ -7,10 +7,6 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/hola', (request, response) => {
-    response.status(200).send({ mensaje: 'hola mundo' })
-});
-
 
 //*CRUD Conductores
 
@@ -36,7 +32,7 @@ app.get("/all/conductores", (req, res) => {
         });
 });
 
-app.get("/conductores/:id", (req, res) => {
+app.get("/conductor/:id", (req, res) => {
     const id = req.params.id;
     conductor
         .findById(id)
@@ -65,6 +61,69 @@ app.patch('/cambiar_direccion/:id', (req, res) => {
 });
 
 
+//*CRUD Usuarios
+
+app.post('/usuario', (req, res) => {
+    const newUsuario = Usuario(req.body);
+    newUsuario.save((err, usuario) => {
+        err
+            ? res.status(400).send(err)
+            : res.status(201).send(usuario);
+    });
+
+});
+
+app.get("/all/usuarios", (req, res) => {
+    usuario
+        .find()
+        .exec()
+        .then(result => {
+            res.send(result);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
+app.get("/usuario/:id", (req, res) => {
+    const id = req.params.id;
+    usuario
+        .findById(id)
+        .exec()
+        .then(result => {
+            result
+                ? res.send(result)
+                : res.status(404).send({ message: "Usuario no encontrado" });
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
+app.patch('/cambiar_direccion_usuario/:id', (req, res) => {
+    const id = req.params.id
+    Conductor.findByIdAndUpdate(id,
+        { $set: req.body },
+        { new: true }).exec()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            res.status(400).send(err);
+        });
+});
+
+app.post('/add/cc/:idUsuario', (req, res) => {
+    const id = req.param.idUsuario;
+    Usuario.findByIdAndUpdate(id, {$push: {cc: [req.body.cc]}}, {new: true}).exec()
+        .then((result) => {
+            res.status(200).send(result);
+        })
+        .catch((err) => {
+            res.status(409).send(err)
+        });
+
+});
 
 app.listen(3000, () => {
     console.log('server on poort 3000')

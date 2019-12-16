@@ -21,6 +21,10 @@ const UsuariosSchema = mongoose.Schema({
         type: String,
         required:true,
     },
+    cc: {
+        type: [String],
+        required:true,
+    },
 
 });
 
