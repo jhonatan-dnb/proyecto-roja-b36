@@ -19,7 +19,7 @@ const ConductorSchema = mongoose.Schema({
         required:true,
     },
     codigo_postal: {
-        type: String,
+        type: Number,
         required:true,
     },
     direccion: {
