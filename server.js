@@ -21,7 +21,7 @@ app.post('/conductor', (req, res) => {
 });
 
 app.get("/all/conductores", (req, res) => {
-    conductor
+    Conductor
         .find()
         .exec()
         .then(result => {
@@ -34,7 +34,7 @@ app.get("/all/conductores", (req, res) => {
 
 app.get("/conductor/:id", (req, res) => {
     const id = req.params.id;
-    conductor
+    Conductor
         .findById(id)
         .exec()
         .then(result => {
@@ -74,7 +74,7 @@ app.post('/usuario', (req, res) => {
 });
 
 app.get("/all/usuarios", (req, res) => {
-    usuario
+    Usuario
         .find()
         .exec()
         .then(result => {
@@ -87,7 +87,7 @@ app.get("/all/usuarios", (req, res) => {
 
 app.get("/usuario/:id", (req, res) => {
     const id = req.params.id;
-    usuario
+    Usuario
         .findById(id)
         .exec()
         .then(result => {
@@ -102,7 +102,7 @@ app.get("/usuario/:id", (req, res) => {
 
 app.patch('/cambiar_direccion_usuario/:id', (req, res) => {
     const id = req.params.id
-    Conductor.findByIdAndUpdate(id,
+    Usuario.findByIdAndUpdate(id,
         { $set: req.body },
         { new: true }).exec()
         .then((result) => {
@@ -125,6 +125,4 @@ app.post('/add/cc/:idUsuario', (req, res) => {
 
 });
 
-app.listen(3000, () => {
-    console.log('server on poort 3000')
-});
+app.listen(PORT, () => { });
