@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { Conductor, Usuario } = require('./models/index')
-//const PORT = process.env.PORT
+const PORT = process.env.PORT
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -125,4 +125,4 @@ app.post('/add/cc/:idUsuario', (req, res) => {
 
 });
 
-app.listen(3000, () => { });
+app.listen(PORT, () => { });
